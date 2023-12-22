@@ -1,0 +1,90 @@
+{% extends 'calculator/base.html' %}
+
+{% block title %}Calculator{% endblock title %}
+
+{% block content %}
+<div id="papersList">
+    <textarea name="" id="papersSearch" cols="30" rows="1"></textarea>
+
+    <input type="checkbox" name="selectAllPapers" id="selectAllPapers">
+    <label for="selectAllPapers">Select all</label>
+
+    <ol>
+        {% for paper in papers %}
+
+        <section>
+            <h2>
+                <input type="checkbox" name="{{ paper.id }}_select" id="{{ paper.id }}_select">
+                <label for="{{ paper.id }}_select">{{ paper.title }}</label>
+            </h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                        <th>Sunday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Delivery</th>
+                        {% for day in paper.days %}
+                        <td>
+                            <input type="checkbox" name="{{ paper.id }}_{{ day.id }}_delivery" id="{{ paper.id }}_{{ day.id }}_delivery" {% if day.delivery %}checked{% endif %}>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>Cost</th>
+                        {% for day in paper.days %}
+                        <td>{{ day.cost }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <button id="{{ paper.title }}_edit">Edit</button>
+        <button id="{{ paper.title }}_delete">Delete</button>
+
+        {% endfor %}
+    </ol>
+</div>
+
+<div id="calendar"></div>
+
+<div id="results">
+    <table>
+        <thead>
+            <tr>
+                <td>Paper</td>
+                <td>Cost</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paper in papers %}
+            <tr>
+                <td>{{ paper.title }}</td>
+                <td>{{ paper.total_cost }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Total</td>
+                <td>{{ total_cost }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <button id="copy">Copy</button>
+    <button id="save">Save</button>
+</div>
+
+{% endblock content %}
