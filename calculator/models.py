@@ -41,10 +41,6 @@ class Cost(models.Model):
             models.UniqueConstraint(
                 fields=['paper', 'day'],
                 name='unique_day'
-            ),
-            models.UniqueConstraint(
-                fields=['paper', 'delivery'],
-                name='unique_cost'
             )
         ]
 

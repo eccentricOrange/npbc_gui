@@ -43,7 +43,11 @@
                     <tr>
                         <th>Cost</th>
                         {% for day in paper.days %}
-                        <td>{{ day.cost }}</td>
+                        <td>
+                            <!-- <input type="number" name="{{ paper.id }}_{{ day.id }}_cost" id="{{ paper.id }}_{{ day.id }}_cost" value="{{ day.cost }}"> -->
+
+                            {{ day.cost }}
+                        </td>
                         {% endfor %}
                     </tr>
                 </tbody>
@@ -57,7 +61,64 @@
     </ol>
 </div>
 
-<div id="calendar"></div>
+<div id="calendar">
+    <section>
+        <button id="prevMonth">Previous Month</button>
+        <select id="monthInput">
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+        </select>
+        <input type="number" id="yearInput" value="2023">
+        <button id="nextMonth">Next Month</button>
+    </section>
+
+    <table>
+        <thead>
+            <tr>
+                <th>M</th>
+                <th>T</th>
+                <th>W</th>
+                <th>T</th>
+                <th>F</th>
+                <th>S</th>
+                <th>S</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week in calendar %}
+            <tr>
+                {% for day in week %}
+                
+                    {% if day.day == 0 %}
+                        <td></td>
+
+                    {% else %}
+
+                        {% if day.undelivered == 1 %}
+                            <td class="undelivered">
+
+                        {% else %}
+                            <td>
+                        {% endif %}
+                                {{ day.day }}
+                                
+                            </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+    </table>
+</div>
 
 <div id="results">
     <table>

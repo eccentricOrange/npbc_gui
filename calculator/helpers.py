@@ -128,3 +128,47 @@ def calculate_cost_of_all_papers(
     return total_costs
 
 
+def get_delivery_data(
+        month: int,
+        year: int,
+        paper_id: int
+    ) -> tuple[list[list[dict]], tuple[str, ...]]:
+    """
+    get the transient delivery data for a given month and paper
+
+    Required structure is a list of lists of tuples:
+    ```py
+    [   # weeks
+        [   # days
+            {
+                "day": int,
+                "undelivered": bool
+            }
+        ]
+    ]
+    ```
+    """
+
+    # get the paper
+    paper = models.Paper.objects.get(id=paper_id)
+
+    # get the delivery data for the paper
+    delivery_data = models.UndeliveredDates.objects.filter(
+        paper=paper,
+        date__month=month,
+        date__year=year
+    ).values_list('date', flat=True)
+
+    # get the calendar for the month
+    main_calendar = monthcalendar(year, month)
+
+    formatted_delivery_data = [
+        [
+            {
+                "day": day,
+                "undelivered": day in delivery_data
+            } for day in week
+        ] for week in main_calendar
+    ]
+
+    return formatted_delivery_data, WEEKDAY_NAMES
