@@ -1,0 +1,15 @@
+body {
+    display: grid;
+    grid-template-areas:
+        "aside main main"
+        "aside main main"
+        "aside main main";
+}
+
+aside {
+    grid-area: aside;
+}
+
+main {
+    grid-area: main;
+}

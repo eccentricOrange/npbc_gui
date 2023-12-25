@@ -1,0 +1,96 @@
+main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "papers calendar calendar"
+        "papers calendar calendar"
+        "papers results results";
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+td,
+th {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+div#papersList {
+    grid-area: papers;
+}
+
+div#papersList ol {
+    padding: 0;
+}
+
+div#calendar {
+    grid-area: calendar;
+}
+
+div#results {
+    grid-area: results;
+}
+
+section.paperCard {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 15px 0;
+
+    display: grid;
+    grid-template-areas:
+        "checkbox title"
+        "data data"
+        "data data"
+        "data data";
+}
+
+section.paperCard:hover {
+    background-color: #f1f1f1;
+}
+
+section.paperCard div.checkbox {
+    grid-area: checkbox;
+    padding: 20px;
+}
+
+section.paperCard div.checkbox input {
+    width: 20px;
+    height: 20px;
+}
+
+section.paperCard h2 {
+    grid-area: title;
+}
+
+section.paperCard table {
+    grid-area: data;
+}
+
+input[type="checkbox"].deliveryCheckbox {
+    appearance: none;
+    -webkit-appearance: none;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    /* font-size: 2rem; */
+    /* padding: 0.1rem; */
+    /* border: 0.25rem solid green; */
+    border-radius: 0.5rem;
+    pointer-events: none;
+}
+
+input[type="checkbox"].deliveryCheckbox::before {
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    transform: scale(0);
+    background-color: green;
+}
+
+input[type="checkbox"].deliveryCheckbox:checked::before {
+    transform: scale(1);
+}

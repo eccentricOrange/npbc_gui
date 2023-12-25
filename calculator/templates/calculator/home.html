@@ -3,6 +3,8 @@
 {% block title %}Calculator{% endblock title %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'calculator/css/home.css' %}">
 <div id="papersList">
     <textarea name="" id="papersSearch" cols="30" rows="1"></textarea>
 
@@ -12,23 +14,19 @@
     <ol>
         {% for paper in papers %}
 
-        <section>
+        <label for="{{ paper.id }}_select"><section class="paperCard">
+            <div class="checkbox"><input type="checkbox" name="{{ paper.id }}_select" id="{{ paper.id }}_select"></div>
             <h2>
-                <input type="checkbox" name="{{ paper.id }}_select" id="{{ paper.id }}_select">
-                <label for="{{ paper.id }}_select">{{ paper.title }}</label>
+                {{ paper.title }}
             </h2>
 
             <table>
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                        <th>Sunday</th>
+                        {% for day in weekdays %}
+                        <th>{{ day.0 }}</th>
+                        {% endfor %}
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +34,12 @@
                         <th>Delivery</th>
                         {% for day in paper.days %}
                         <td>
-                            <input type="checkbox" name="{{ paper.id }}_{{ day.id }}_delivery" id="{{ paper.id }}_{{ day.id }}_delivery" {% if day.delivery %}checked{% endif %}>
+                            <input
+                                type="checkbox"
+                                name="{{ paper.id }}_{{ day.id }}_delivery"
+                                id="{{ paper.id }}_{{ day.id }}_delivery"
+                                class="deliveryCheckbox"
+                                {% if day.delivery %}checked{% endif %}>
                         </td>
                         {% endfor %}
                     </tr>
@@ -44,19 +47,13 @@
                         <th>Cost</th>
                         {% for day in paper.days %}
                         <td>
-                            <!-- <input type="number" name="{{ paper.id }}_{{ day.id }}_cost" id="{{ paper.id }}_{{ day.id }}_cost" value="{{ day.cost }}"> -->
-
                             {{ day.cost }}
                         </td>
                         {% endfor %}
                     </tr>
                 </tbody>
             </table>
-        </section>
-
-        <button id="{{ paper.title }}_edit">Edit</button>
-        <button id="{{ paper.title }}_delete">Delete</button>
-
+        </section></label>
         {% endfor %}
     </ol>
 </div>
@@ -85,13 +82,9 @@
     <table>
         <thead>
             <tr>
-                <th>M</th>
-                <th>T</th>
-                <th>W</th>
-                <th>T</th>
-                <th>F</th>
-                <th>S</th>
-                <th>S</th>
+                {% for day in weekdays %}
+                <th>{{ day }}</th>
+                {% endfor %}
             </tr>
         </thead>
         <tbody>
@@ -124,8 +117,8 @@
     <table>
         <thead>
             <tr>
-                <td>Paper</td>
-                <td>Cost</td>
+                <th>Paper</th>
+                <th>Cost</th>
             </tr>
         </thead>
         <tbody>
@@ -138,7 +131,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td>Total</td>
+                <th>Total</th>
                 <td>{{ total_cost }}</td>
             </tr>
         </tfoot>

@@ -45,11 +45,12 @@
 				"mutantdino.resourcemonitor"
 			]
 		}
-	}
+	},
 
 	// Configure tool-specific properties.
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	// "remoteUser": "root",
+	"postStartCommand": "python manage.py runserver"
 }
