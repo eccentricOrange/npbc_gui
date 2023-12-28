@@ -42,7 +42,8 @@
 				"ms-python.debugpy",
 				"mtxr.sqltools",
 				"mtxr.sqltools-driver-sqlite",
-				"mutantdino.resourcemonitor"
+				"mutantdino.resourcemonitor",
+				"wholroyd.jinja"
 			]
 		}
 	},

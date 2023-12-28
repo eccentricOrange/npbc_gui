@@ -4,56 +4,78 @@
 
 {% block content %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'calculator/css/home.css' %}">
+<link rel="stylesheet"
+      href="{% static 'calculator/css/home.css' %}">
 <div id="papersList">
-    <textarea name="" id="papersSearch" cols="30" rows="1"></textarea>
+    <textarea name=""
+              id="papersSearch"
+              cols="30"
+              rows="1"></textarea>
 
-    <input type="checkbox" name="selectAllPapers" id="selectAllPapers">
+    <input type="checkbox"
+           name="selectAllPapers"
+           id="selectAllPapers">
     <label for="selectAllPapers">Select all</label>
 
     <ol>
         {% for paper in papers %}
 
-        <label for="{{ paper.id }}_select"><section class="paperCard">
-            <div class="checkbox"><input type="checkbox" name="{{ paper.id }}_select" id="{{ paper.id }}_select"></div>
-            <h2>
-                {{ paper.title }}
-            </h2>
+        <label for="{{ paper.id }}_select">
+            <section class="paperCard">
+                <div class="checkbox">
+                    <input type="checkbox"
+                           name="{{ paper.id }}_select"
+                           id="{{ paper.id }}_select">
+                </div>
+                <h2>
+                    {{ paper.title }}
+                </h2>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        {% for day in weekdays %}
-                        <th>{{ day.0 }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Delivery</th>
-                        {% for day in paper.days %}
-                        <td>
-                            <input
-                                type="checkbox"
-                                name="{{ paper.id }}_{{ day.id }}_delivery"
-                                id="{{ paper.id }}_{{ day.id }}_delivery"
-                                class="deliveryCheckbox"
-                                {% if day.delivery %}checked{% endif %}>
-                        </td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <th>Cost</th>
-                        {% for day in paper.days %}
-                        <td>
-                            {{ day.cost }}
-                        </td>
-                        {% endfor %}
-                    </tr>
-                </tbody>
-            </table>
-        </section></label>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            {% for day in weekdays %}
+                            <th>{{ day.0 }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Delivery</th>
+                            {% for day in paper.days %}
+                            <td>
+                                <input type="checkbox"
+                                       name="{{ paper.id }}_{{ day.id }}_delivery"
+                                       id="{{ paper.id }}_{{ day.id }}_delivery"
+                                       class="deliveryCheckbox"
+                                       readonly
+                                       {% if day.delivery %}checked{% endif %}>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>Cost</th>
+                            {% for day in paper.days %}
+                            <td>
+                                <input type="number"
+                                       name="{{ paper.id }}_{{ day.id }}_cost"
+                                       id="{{ paper.id }}_{{ day.id }}_cost"
+                                       class="costInput"
+                                       readonly
+                                       value="{{ day.cost }}">
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="quickEdit"
+                        id="{{ paper.id }}_quickEdit">
+                    Quick Edit
+                </button>
+            </section>
+        </label>
         {% endfor %}
     </ol>
 </div>
@@ -75,7 +97,9 @@
             <option value="November">November</option>
             <option value="December">December</option>
         </select>
-        <input type="number" id="yearInput" value="2023">
+        <input type="number"
+               id="yearInput"
+               value="2023">
         <button id="nextMonth">Next Month</button>
     </section>
 
@@ -91,22 +115,22 @@
             {% for week in calendar %}
             <tr>
                 {% for day in week %}
-                
-                    {% if day.day == 0 %}
-                        <td></td>
+
+                {% if day.day == 0 %}
+                <td></td>
+
+                {% else %}
+
+                {% if day.undelivered == 1 %}
+                <td class="undelivered">
 
                     {% else %}
-
-                        {% if day.undelivered == 1 %}
-                            <td class="undelivered">
-
-                        {% else %}
-                            <td>
-                        {% endif %}
-                                {{ day.day }}
-                                
-                            </td>
+                <td>
                     {% endif %}
+                    {{ day.day }}
+
+                </td>
+                {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
