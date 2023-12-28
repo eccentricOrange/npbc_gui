@@ -159,6 +159,11 @@ def get_delivery_data(
         date__year=year
     ).values_list('date', flat=True)
 
+    list_of_days = tuple(map(
+        lambda underlivered_date: underlivered_date.day,
+        delivery_data
+    ))
+
     # get the calendar for the month
     main_calendar = monthcalendar(year, month)
 
@@ -166,7 +171,7 @@ def get_delivery_data(
         [
             {
                 "day": day,
-                "undelivered": day in delivery_data
+                "undelivered": day in list_of_days
             } for day in week
         ] for week in main_calendar
     ]

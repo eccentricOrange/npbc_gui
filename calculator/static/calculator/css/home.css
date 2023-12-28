@@ -114,5 +114,11 @@ section.paperCard table {
 
 .quickEdit {
     grid-area: quickEdit;
-    width: auto;
+    width: fit-content;
+    margin-left: auto;
+}
+
+.undelivered {
+    background-color: red;
+    color: white;
 }

@@ -6,6 +6,8 @@
 {% load static %}
 <link rel="stylesheet"
       href="{% static 'calculator/css/home.css' %}">
+<script src="{% static 'calculator/js/home.js' %}"
+        defer></script>
 <div id="papersList">
     <textarea name=""
               id="papersSearch"
@@ -84,22 +86,22 @@
     <section>
         <button id="prevMonth">Previous Month</button>
         <select id="monthInput">
-            <option value="January">January</option>
-            <option value="February">February</option>
-            <option value="March">March</option>
-            <option value="April">April</option>
-            <option value="May">May</option>
-            <option value="June">June</option>
-            <option value="July">July</option>
-            <option value="August">August</option>
-            <option value="September">September</option>
-            <option value="October">October</option>
-            <option value="November">November</option>
-            <option value="December">December</option>
+            <option value="January" {% if currentMonth.month == 1 %}selected="selected"{% endif%}>January</option>
+            <option value="February" {% if currentMonth.month == 2 %}selected="selected"{% endif%}>February</option>
+            <option value="March" {% if currentMonth.month == 3 %}selected="selected"{% endif%}>March</option>
+            <option value="April" {% if currentMonth.month == 4 %}selected="selected"{% endif%}>April</option>
+            <option value="May" {% if currentMonth.month == 5 %}selected="selected"{% endif%}>May</option>
+            <option value="June" {% if currentMonth.month == 6 %}selected="selected"{% endif%}>June</option>
+            <option value="July" {% if currentMonth.month == 7 %}selected="selected"{% endif%}>July</option>
+            <option value="August" {% if currentMonth.month == 8 %}selected="selected"{% endif%}>August</option>
+            <option value="September" {% if currentMonth.month == 9 %}selected="selected"{% endif%}>September</option>
+            <option value="October" {% if currentMonth.month == 10 %}selected="selected"{% endif%}>October</option>
+            <option value="November" {% if currentMonth.month == 11 %}selected="selected"{% endif%}>November</option>
+            <option value="December" {% if currentMonth.month == 12 %}selected="selected"{% endif%}>December</option>
         </select>
         <input type="number"
                id="yearInput"
-               value="2023">
+               value="{{ currentMonth.year }}">
         <button id="nextMonth">Next Month</button>
     </section>
 
@@ -117,21 +119,16 @@
                 {% for day in week %}
 
                 {% if day.day == 0 %}
-                <td></td>
+                    <td></td>
 
                 {% else %}
 
-                {% if day.undelivered == 1 %}
-                <td class="undelivered">
-
-                    {% else %}
-                <td>
-                    {% endif %}
+                    <td id="{{ day.day }}"{% if day.undelivered %} class="undelivered"{% endif %}>
                     {{ day.day }}
+                    </td>
 
-                </td>
                 {% endif %}
-                {% endfor %}
+            {% endfor %}
             </tr>
             {% endfor %}
     </table>
