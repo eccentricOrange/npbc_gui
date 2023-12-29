@@ -177,3 +177,19 @@ def get_delivery_data(
     ]
 
     return formatted_delivery_data, WEEKDAY_NAMES
+
+
+def get_calculated_cost(
+        month: int,
+        year: int,
+    ) -> float:
+    """get the calculated cost for a given month and paper"""
+
+    # get the number of each weekday in the month
+    number_of_each_weekday = tuple(get_number_of_each_weekday(month, year))
+
+    # get the cost of each paper
+    total_costs = calculate_cost_of_all_papers(number_of_each_weekday)
+
+    # return the total cost
+    return total_costs

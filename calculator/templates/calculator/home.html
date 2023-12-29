@@ -22,62 +22,60 @@
     <ol>
         {% for paper in papers %}
 
-        <label for="{{ paper.id }}_select">
-            <section class="paperCard">
-                <div class="checkbox">
-                    <input type="checkbox"
-                           name="{{ paper.id }}_select"
-                           id="{{ paper.id }}_select">
-                </div>
-                <h2>
-                    {{ paper.title }}
-                </h2>
+        <section class="paperCard {% if paper.id == currentPaper %}selectedPaper{% endif %}"
+                 onclick="selectPaper({{ paper.id }})">
+            <!-- <input type="checkbox"
+            name="{{ paper.id }}_select"
+            id="{{ paper.id }}_select"
+            class="paperCheckbox"> -->
+            <h2>
+                {{ paper.title }}
+            </h2>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            {% for day in weekdays %}
-                            <th>{{ day.0 }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Delivery</th>
-                            {% for day in paper.days %}
-                            <td>
-                                <input type="checkbox"
-                                       name="{{ paper.id }}_{{ day.id }}_delivery"
-                                       id="{{ paper.id }}_{{ day.id }}_delivery"
-                                       class="deliveryCheckbox"
-                                       readonly
-                                       {% if day.delivery %}checked{% endif %}>
-                            </td>
-                            {% endfor %}
-                        </tr>
-                        <tr>
-                            <th>Cost</th>
-                            {% for day in paper.days %}
-                            <td>
-                                <input type="number"
-                                       name="{{ paper.id }}_{{ day.id }}_cost"
-                                       id="{{ paper.id }}_{{ day.id }}_cost"
-                                       class="costInput"
-                                       readonly
-                                       value="{{ day.cost }}">
-                            </td>
-                            {% endfor %}
-                        </tr>
-                    </tbody>
-                </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        {% for day in weekdays %}
+                        <th>{{ day.0 }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Delivery</th>
+                        {% for day in paper.days %}
+                        <td>
+                            <input type="checkbox"
+                                    name="{{ paper.id }}_{{ day.id }}_delivery"
+                                    id="{{ paper.id }}_{{ day.id }}_delivery"
+                                    class="deliveryCheckbox"
+                                    readonly
+                                    {% if day.delivery %}checked{% endif %}>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>Cost</th>
+                        {% for day in paper.days %}
+                        <td>
+                            <input type="number"
+                                    name="{{ paper.id }}_{{ day.id }}_cost"
+                                    id="{{ paper.id }}_{{ day.id }}_cost"
+                                    class="costInput"
+                                    readonly
+                                    value="{{ day.cost }}">
+                        </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
 
-                <button class="quickEdit"
-                        id="{{ paper.id }}_quickEdit">
-                    Quick Edit
-                </button>
-            </section>
-        </label>
+            <!-- <button class="quickEdit"
+                    id="{{ paper.id }}_quickEdit">
+                Quick Edit
+            </button> -->
+        </section>
         {% endfor %}
     </ol>
 </div>

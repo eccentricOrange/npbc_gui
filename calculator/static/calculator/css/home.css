@@ -42,29 +42,32 @@ section.paperCard {
 
     display: grid;
     grid-template-areas:
-        "checkbox title"
-        "data data"
-        "data data"
-        "data data"
-        ". quickEdit";
+        "title"
+        "data";
 }
 
 section.paperCard:hover {
     background-color: #f1f1f1;
+    cursor: pointer;
 }
 
-section.paperCard div.checkbox {
+section.paperCard.selectedPaper {
+    border: #2979ff 5px solid;
+}
+
+section.paperCard .paperCheckbox {
     grid-area: checkbox;
     padding: 20px;
-}
-
-section.paperCard div.checkbox input {
     width: 20px;
     height: 20px;
 }
 
 section.paperCard h2 {
     grid-area: title;
+    
+    /*horizontal centering*/
+    display: flex;
+    justify-content: center;
 }
 
 section.paperCard table {
