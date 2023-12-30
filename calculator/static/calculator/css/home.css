@@ -2,9 +2,10 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
-        "papers calendar calendar"
-        "papers calendar calendar"
-        "papers results results";
+        "papers papers calendar_results";
+
+    margin: 20px;
+    padding-right: 30px;
 }
 
 table {
@@ -12,18 +13,31 @@ table {
     border: 1px solid black;
 }
 
-td,
-th {
+td, th {
     border: 1px solid black;
     padding: 5px;
 }
 
 div#papersList {
     grid-area: papers;
+    width: 40vw;
+    margin-right: 10px;
 }
 
 div#papersList ol {
     padding: 0;
+}
+
+div#calendar_results {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "calendar"
+        "results";
+    height: 100vh;
+    width: 40vw;
+    margin-left: 10px;
 }
 
 div#calendar {
@@ -36,9 +50,9 @@ div#results {
 
 section.paperCard {
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 5px;
-    margin: 15px 0;
+    margin: 30px;
 
     display: grid;
     grid-template-rows: auto 1fr;
@@ -50,7 +64,6 @@ section.paperCard {
 
 section.paperCard:hover {
     background-color: #f1f1f1;
-    /* cursor: pointer; */
 }
 
 section.paperCard.selectedPaper {
@@ -60,22 +73,23 @@ section.paperCard.selectedPaper {
 
 section.paperCard .paperCheckbox {
     grid-area: header;
-    /* align-self: ; */
     padding: 20px;
+    margin: 10px;
     width: 20px;
     height: 20px;
 }
 
-section.paperCard h2 {
+section.paperCard h3 {
     grid-area: header;
-    
-    /*horizontal centering*/
     display: flex;
     justify-content: center;
+    margin: 10px 0;
+    font-size: 1.75em;
 }
 
 section.paperCard table {
     grid-area: data;
+    margin: 20px;
 }
 
 .paperLink {
@@ -107,22 +121,13 @@ section.paperCard table {
 
 .costInput {
     width: 80%;
-    display: block;
-    
 }
 
 .costInput[readonly] {
     border: 0;
     background-color: transparent;
-    text-align: right;
-}
-
-.costInput[readonly]:focus {
-    outline: none;
-}
-
-.costInput[readonly]::placeholder {
-    text-align: right;
+    text-align: center;
+    -moz-appearance: textfield;
 }
 
 .quickEdit {

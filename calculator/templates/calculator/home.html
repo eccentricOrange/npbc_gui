@@ -14,15 +14,16 @@
     const currentPaperID = {{ currentPaper }};
 </script>
 <div id="papersList">
+    <h2>Papers you subscribe to</h2>
+    <!-- <input type="checkbox"
+    name="selectAllPapers"
+    id="selectAllPapers">
+    <label for="selectAllPapers">Select all</label>
+    
     <textarea name=""
               id="papersSearch"
               cols="30"
-              rows="1"></textarea>
-
-    <input type="checkbox"
-           name="selectAllPapers"
-           id="selectAllPapers">
-    <label for="selectAllPapers">Select all</label>
+              rows="1"></textarea> -->
 
     <ol>
         {% for paper in papers %}
@@ -33,9 +34,9 @@
                 name="{{ paper.id }}_select"
                 id="{{ paper.id }}_select"
                 class="paperCheckbox">
-                <h2>
+                <h3>
                     {{ paper.title }}
-                </h2>
+                </h3>
 
                 <table>
                     <thead>
@@ -86,7 +87,9 @@
     </ol>
 </div>
 
+<div id="calendar_results">
 <div id="calendar">
+    <h2>Dates when you didn't receive the paper</h2>
     <section>
         <a href="?month={{ tcd.previous_month }}&year={{ tcd.previous_year }}&paper={{ currentPaper }}"><button id="prevMonth">Previous Month</button></a>
         <select id="monthInput">
@@ -140,6 +143,7 @@
 </div>
 
 <div id="results">
+    <h2>Results for {{ currentMonth.month }}/{{ currentMonth.year }}</h2>
     <table>
         <thead>
             <tr>
@@ -165,6 +169,7 @@
 
     <button id="copy">Copy</button>
     <button id="save">Save</button>
+</div>
 </div>
 
 {% endblock content %}

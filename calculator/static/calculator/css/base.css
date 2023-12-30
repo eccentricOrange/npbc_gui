@@ -4,12 +4,50 @@ body {
         "aside main main"
         "aside main main"
         "aside main main";
+    margin: 0;
+    font-family: sans-serif;
 }
 
 aside {
     grid-area: aside;
+    margin-right: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 3em;
+    color: #2962FF;
+}
+
+h2 {
+    color: #757575;
+    border-bottom: #757575 1px solid;
 }
 
 main {
     grid-area: main;
+}
+
+aside {
+    background-color: #BBDEFB;
+}
+
+nav menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav>menu li {
+    display: block;
+    padding: 10px 50px;
+}
+
+nav>menu li.current {
+    background-color: #2962FF;
+    color: white;
+    font-weight: bold;
+}
+
+nav>menu li:hover {
+    background-color: #90CAF9;
 }

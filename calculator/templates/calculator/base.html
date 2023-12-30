@@ -12,13 +12,14 @@
 
 <body>
     <aside>
+        <h1>NPBC</h1>
         <nav>
             <menu>
-                <li class="{ current_page.calculate }"><a href="#">Calculate</a></li>
-                <li class="{ current_page.edit_papers }"><a href="#">Edit Papers</a></li>
-                <li class="{ current_page.insights }"><a href="#">Insights</a></li>
-                <li class="{ current_page.history }"><a href="#">History</a></li>
-                <li class="{ current_page.settings }"><a href="#">Settings</a></li>
+                <a><li class="{% if current_page == 'calculate' %}current{% endif %}">Calculate</li></a>
+                <a><li class="{% if current_page == 'edit_papers' %}current{% endif %}">Edit Papers</li></a>
+                <a><li class="{% if current_page == 'insights' %}current{% endif %}">Insights</li></a>
+                <a><li class="{% if current_page == 'history' %}current{% endif %}">History</li></a>
+                <a><li class="{% if current_page == 'settings' %}current{% endif %}">Settings</li></a>
             </menu>
         </nav>
     </aside>

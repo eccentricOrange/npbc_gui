@@ -48,7 +48,8 @@ def home(request: HttpRequest) -> HttpResponse:
         },
         "currentPaper": paper_id,
         "total_cost": sum(calculated_costs.values()),
-        "tcd": time_change_data
+        "tcd": time_change_data,
+        "current_page": "calculate"
     }
 
     return render(request, "calculator/home.html", context)
