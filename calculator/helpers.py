@@ -182,7 +182,7 @@ def get_delivery_data(
 def get_calculated_cost(
         month: int,
         year: int,
-    ) -> float:
+    ) -> dict[int, float]:
     """get the calculated cost for a given month and paper"""
 
     # get the number of each weekday in the month

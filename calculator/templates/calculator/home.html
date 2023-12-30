@@ -8,6 +8,11 @@
       href="{% static 'calculator/css/home.css' %}">
 <script src="{% static 'calculator/js/home.js' %}"
         defer></script>
+<script>
+    const currentMonth = {{ tcd.current_month }};
+    const currentYear = {{ tcd.current_year }};
+    const currentPaperID = {{ currentPaper }};
+</script>
 <div id="papersList">
     <textarea name=""
               id="papersSearch"
@@ -21,86 +26,87 @@
 
     <ol>
         {% for paper in papers %}
+        <a href="?month={{ tcd.current_month }}&year={{ tcd.current_year }}&paper={{ paper.id }}"
+           class="paperLink">
+            <section class="paperCard {% if paper.id == currentPaper %}selectedPaper{% endif %}">
+                <input type="checkbox"
+                name="{{ paper.id }}_select"
+                id="{{ paper.id }}_select"
+                class="paperCheckbox">
+                <h2>
+                    {{ paper.title }}
+                </h2>
 
-        <section class="paperCard {% if paper.id == currentPaper %}selectedPaper{% endif %}"
-                 onclick="selectPaper({{ paper.id }})">
-            <!-- <input type="checkbox"
-            name="{{ paper.id }}_select"
-            id="{{ paper.id }}_select"
-            class="paperCheckbox"> -->
-            <h2>
-                {{ paper.title }}
-            </h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            {% for day in weekdays %}
+                            <th>{{ day.0 }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Delivery</th>
+                            {% for day in paper.days %}
+                            <td>
+                                <input type="checkbox"
+                                        name="{{ paper.id }}_{{ day.id }}_delivery"
+                                        id="{{ paper.id }}_{{ day.id }}_delivery"
+                                        class="deliveryCheckbox"
+                                        readonly
+                                        {% if day.delivery %}checked{% endif %}>
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th>Cost</th>
+                            {% for day in paper.days %}
+                            <td>
+                                <input type="number"
+                                        name="{{ paper.id }}_{{ day.id }}_cost"
+                                        id="{{ paper.id }}_{{ day.id }}_cost"
+                                        class="costInput"
+                                        readonly
+                                        value="{{ day.cost }}">
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        {% for day in weekdays %}
-                        <th>{{ day.0 }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Delivery</th>
-                        {% for day in paper.days %}
-                        <td>
-                            <input type="checkbox"
-                                    name="{{ paper.id }}_{{ day.id }}_delivery"
-                                    id="{{ paper.id }}_{{ day.id }}_delivery"
-                                    class="deliveryCheckbox"
-                                    readonly
-                                    {% if day.delivery %}checked{% endif %}>
-                        </td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <th>Cost</th>
-                        {% for day in paper.days %}
-                        <td>
-                            <input type="number"
-                                    name="{{ paper.id }}_{{ day.id }}_cost"
-                                    id="{{ paper.id }}_{{ day.id }}_cost"
-                                    class="costInput"
-                                    readonly
-                                    value="{{ day.cost }}">
-                        </td>
-                        {% endfor %}
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- <button class="quickEdit"
-                    id="{{ paper.id }}_quickEdit">
-                Quick Edit
-            </button> -->
-        </section>
+                <!-- <button class="quickEdit"
+                        id="{{ paper.id }}_quickEdit">
+                    Quick Edit
+                </button> -->
+            </section>
+        </a>
         {% endfor %}
     </ol>
 </div>
 
 <div id="calendar">
     <section>
-        <button id="prevMonth">Previous Month</button>
+        <a href="?month={{ tcd.previous_month }}&year={{ tcd.previous_year }}&paper={{ currentPaper }}"><button id="prevMonth">Previous Month</button></a>
         <select id="monthInput">
-            <option value="January" {% if currentMonth.month == 1 %}selected="selected"{% endif%}>January</option>
-            <option value="February" {% if currentMonth.month == 2 %}selected="selected"{% endif%}>February</option>
-            <option value="March" {% if currentMonth.month == 3 %}selected="selected"{% endif%}>March</option>
-            <option value="April" {% if currentMonth.month == 4 %}selected="selected"{% endif%}>April</option>
-            <option value="May" {% if currentMonth.month == 5 %}selected="selected"{% endif%}>May</option>
-            <option value="June" {% if currentMonth.month == 6 %}selected="selected"{% endif%}>June</option>
-            <option value="July" {% if currentMonth.month == 7 %}selected="selected"{% endif%}>July</option>
-            <option value="August" {% if currentMonth.month == 8 %}selected="selected"{% endif%}>August</option>
-            <option value="September" {% if currentMonth.month == 9 %}selected="selected"{% endif%}>September</option>
-            <option value="October" {% if currentMonth.month == 10 %}selected="selected"{% endif%}>October</option>
-            <option value="November" {% if currentMonth.month == 11 %}selected="selected"{% endif%}>November</option>
-            <option value="December" {% if currentMonth.month == 12 %}selected="selected"{% endif%}>December</option>
+            <option value="January" {% if tcd.current_month == 1 %}selected="selected"{% endif%}>January</option>
+            <option value="February" {% if tcd.current_month == 2 %}selected="selected"{% endif%}>February</option>
+            <option value="March" {% if tcd.current_month == 3 %}selected="selected"{% endif%}>March</option>
+            <option value="April" {% if tcd.current_month == 4 %}selected="selected"{% endif%}>April</option>
+            <option value="May" {% if tcd.current_month == 5 %}selected="selected"{% endif%}>May</option>
+            <option value="June" {% if tcd.current_month == 6 %}selected="selected"{% endif%}>June</option>
+            <option value="July" {% if tcd.current_month == 7 %}selected="selected"{% endif%}>July</option>
+            <option value="August" {% if tcd.current_month == 8 %}selected="selected"{% endif%}>August</option>
+            <option value="September" {% if tcd.current_month == 9 %}selected="selected"{% endif%}>September</option>
+            <option value="October" {% if tcd.current_month == 10 %}selected="selected"{% endif%}>October</option>
+            <option value="November" {% if tcd.current_month == 11 %}selected="selected"{% endif%}>November</option>
+            <option value="December" {% if tcd.current_month == 12 %}selected="selected"{% endif%}>December</option>
         </select>
         <input type="number"
                id="yearInput"
                value="{{ currentMonth.year }}">
-        <button id="nextMonth">Next Month</button>
+               <a href="?month={{ tcd.next_month }}&year={{ tcd.next_year }}&paper={{ currentPaper }}"><button id="nextMonth">Next Month</button></a>
     </section>
 
     <table>
@@ -121,7 +127,7 @@
 
                 {% else %}
 
-                    <td id="{{ day.day }}"{% if day.undelivered %} class="undelivered"{% endif %}>
+                    <td id="{{ day.day }}"{% if day.undelivered %} class="undelivered" {% endif %} onclick="registerUndelivered({{ day.day }})">
                     {{ day.day }}
                     </td>
 
@@ -130,6 +136,7 @@
             </tr>
             {% endfor %}
     </table>
+    <p id="registerStatus"></p>
 </div>
 
 <div id="results">
@@ -142,16 +149,16 @@
         </thead>
         <tbody>
             {% for paper in papers %}
-            <tr>
+            <tr class="{% if paper.id == currentPaper %}currentPaper{% endif %}">
                 <td>{{ paper.title }}</td>
-                <td>{{ paper.total_cost }}</td>
+                <td id="{{ paper.id }}calculatedCost">{{ paper.total_cost }}</td>
             </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
                 <th>Total</th>
-                <td>{{ total_cost }}</td>
+                <td id="calculatedTotalCost">{{ total_cost }}</td>
             </tr>
         </tfoot>
     </table>
