@@ -12,14 +12,6 @@ function monthYearListener() {
     );
 }
 
-// function selectPaper(paperId) {
-//     let monthIndex = document.getElementById("monthInput").selectedIndex;
-//     let year = document.getElementById("yearInput").value;
-
-//     let params = `?month=${monthIndex+1}&year=${year}&paper=${paperId}`;
-//     window.location.href = params;
-// }
-
 function registerUndelivered(day) {
     const statusElement = document.getElementById("registerStatus");
     const CSRFToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
@@ -51,6 +43,7 @@ function registerUndelivered(day) {
     })
     .then(data => {
         statusElement.innerHTML = `Successfully updated date ${day}`;
+        statusElement.classList.add("success");
         setTimeout(() => {
             statusElement.innerHTML = "";
         }, 2000);
@@ -60,23 +53,50 @@ function registerUndelivered(day) {
     .catch(error => {
         console.log(error);
         statusElement.innerHTML = "Error updating date";
+        statusElement.classList.add("error");
         setTimeout(() => {
             statusElement.innerHTML = "";
         }, 5000);
     });
 }
 
-function updateCalculatedCosts() {
-    const url = `/get-calculated-costs/?month=${currentMonth}&year=${currentYear}`;
+function copyToClipboard() {
+    const url = `/get-calculated-string/?month=${currentMonth}&year=${currentYear}`;
+    const statusElement = document.getElementById("copySaveStatus");
 
     fetch(url)
     .then(response => {
         if (!response.ok) {
             throw new Error("Network response was not OK");
         }
-        return response.json();
+        return response.text();
     })
     .then(data => {
+        navigator.clipboard.writeText(data);
+        statusElement.innerHTML = "Copied to clipboard";
+        statusElement.classList.add("success");
+        setTimeout(() => {
+            statusElement.innerHTML = "";
+        }, 2000);
+    })
+    
+}
+
+function getUpdatedCalculatedCosts() {
+    const url = `/get-calculated-costs/?month=${currentMonth}&year=${currentYear}`;
+
+    return fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not OK");
+        }
+        return response.json();
+    })
+}
+
+function updateCalculatedCosts() {
+    
+    getUpdatedCalculatedCosts().then(data => {
         console.log(data);
         for (let paper in data["costs"]) {
             document.getElementById(`${paper}calculatedCost`).innerHTML = data["costs"][paper];

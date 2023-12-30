@@ -36,7 +36,7 @@ def home(request: HttpRequest) -> HttpResponse:
     }
 
     for paper in papers:
-        paper["total_cost"] = calculated_costs[paper["id"]]
+        paper["total_cost"] = helpers.drop_trailing_zero(calculated_costs[paper["id"]])
 
     context = {
         "papers": papers,
@@ -47,7 +47,7 @@ def home(request: HttpRequest) -> HttpResponse:
             "year": year
         },
         "currentPaper": paper_id,
-        "total_cost": sum(calculated_costs.values()),
+        "total_cost": helpers.drop_trailing_zero(sum(calculated_costs.values())),
         "tcd": time_change_data,
         "current_page": "calculate"
     }
@@ -162,3 +162,27 @@ def get_calculated_costs(request: HttpRequest) -> HttpResponse:
     }
 
     return JsonResponse(content, status=HTTPStatus.OK)
+
+
+def get_calculated_string(request: HttpRequest) -> HttpResponse:
+
+    month = int(request.GET.get("month", 0))
+    year = int(request.GET.get("year", 0))
+    
+    papers = helpers.get_all_papers()
+
+    if not (month and year and 1 <= month <= 12):
+        return HttpResponse("Invalid month or year", status=HTTPStatus.BAD_REQUEST)
+
+    calculated_costs = helpers.get_calculated_cost(month, year)
+
+    string = ""
+
+    for paper_id, cost in calculated_costs.items():
+        for paper in papers:
+            if paper["id"] == paper_id:
+                string += f"{paper['title']}: {helpers.drop_trailing_zero(cost)}\n"
+
+    string += f"*TOTAL: {helpers.drop_trailing_zero(sum(calculated_costs.values()))}*"
+
+    return HttpResponse(string, status=HTTPStatus.OK)

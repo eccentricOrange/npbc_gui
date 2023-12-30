@@ -10,13 +10,12 @@ body {
 
 aside {
     grid-area: aside;
-    margin-right: 20px;
 }
 
 h1 {
     text-align: center;
     font-size: 3em;
-    color: #2962FF;
+    color: #1565c0;
 }
 
 h2 {
@@ -39,7 +38,7 @@ nav menu {
 
 nav>menu li {
     display: block;
-    padding: 10px 50px;
+    padding: 1em 5em;
 }
 
 nav>menu li.current {
@@ -50,4 +49,12 @@ nav>menu li.current {
 
 nav>menu li:hover {
     background-color: #90CAF9;
+}
+
+p.success {
+    color: #4caf50;
+}
+
+p.error {
+    color: #f44336;
 }

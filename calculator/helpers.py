@@ -7,6 +7,9 @@ import numpy.typing
 
 WEEKDAY_NAMES = tuple(weekday_names_iterable)
 
+def drop_trailing_zero(number: float) -> int | float:
+    return int(number) if number.is_integer() else number
+
 def get_all_papers() -> list[dict]:
     """
     Required structure is a list of this dictionary:
@@ -42,7 +45,7 @@ def get_all_papers() -> list[dict]:
             paper_dict["days"].append({
                 "id": cost.id,
                 "delivery": cost.delivery,
-                "cost": cost.cost
+                "cost": drop_trailing_zero(cost.cost)
             })
 
         papers_list.append(paper_dict)
